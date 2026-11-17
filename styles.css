@@ -88,8 +88,9 @@
       text-transform: uppercase;
       font-size: 0.78rem;
       margin-bottom: 14px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.1s forwards;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .eyebrow { opacity: 0; animation: fadeUp 0.8s ease 0.1s forwards; }
     }
     .eyebrow::before {
       content: "";
@@ -101,23 +102,26 @@
       line-height: 1.02;
       letter-spacing: -0.03em;
       margin-bottom: 18px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.25s forwards;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      h1 { opacity: 0; animation: fadeUp 0.9s ease 0.25s forwards; }
     }
     .hero p {
       color: var(--muted);
       font-size: 1.1rem;
       max-width: 520px;
       margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero p { opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards; }
     }
     .actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.55s forwards;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .actions { opacity: 0; animation: fadeUp 0.9s ease 0.55s forwards; }
     }
     .btn {
       display: inline-flex;
@@ -552,6 +556,7 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; }
+      .eyebrow, h1, .hero p, .actions { opacity: 1 !important; transform: none !important; }
     }
 
     /* Legal, consent and order status */
