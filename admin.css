@@ -97,3 +97,19 @@
     .order-actions a, .order-actions button { cursor: pointer; position: relative; z-index: 2; }
     .order-row a { color: var(--accent); text-decoration: none; }
     .order-row a:hover { text-decoration: underline; }
+    /* Admin buttons themed to site palette */
+    .admin-page .btn-primary {
+      background: var(--accent-2, #7c5cff);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(124, 92, 255, 0.22);
+    }
+    .admin-page .btn-primary:hover { box-shadow: 0 16px 40px rgba(124, 92, 255, 0.32); }
+    .admin-page .btn-ghost { border-color: rgba(124, 92, 255, 0.35); }
+    /* Status-based card accents */
+    .order-card.new { border-left: 3px solid #7c5cff; }
+    .order-card.progress { border-left: 3px solid #f0b429; }
+    .order-card.done { border-left: 3px solid #4ade80; }
+    /* Status select colored by value */
+    select.status-new { border-color: #7c5cff; color: #c9b8ff; }
+    select.status-progress { border-color: #f0b429; color: #ffe08a; }
+    select.status-done { border-color: #4ade80; color: #a7f3c0; }

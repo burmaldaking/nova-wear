@@ -2,6 +2,8 @@
 // NOTE: client-side password is NOT real security. Change ADMIN_PASSWORD and, for real protection, put the panel behind server-side auth.
 
 const ADMIN_PASSWORD = 'novawear'; // CHANGE THIS before publishing
+// Must match ORDER_API in script.js. Set to your Google Apps Script Web app URL to share orders across browsers.
+const ORDER_API = '';
 
 const $ = (id) => document.getElementById(id);
 
@@ -83,6 +85,7 @@ function renderOrders() {
       </div>
       <div class="order-row"><strong>Товар:</strong> ${escapeHtml(order.product || '—')} · размер ${escapeHtml(order.size || '—')} · ${escapeHtml(order.price || '—')}</div>
       <div class="order-row"><strong>Телефон:</strong> <a href="tel:${escapeAttr(order.phone)}">${escapeHtml(order.phone || '—')}</a></div>
+      ${order.address ? `<div class="order-row"><strong>Адрес доставки:</strong> ${escapeHtml(order.address)}</div>` : ''}
       <div class="order-row"><strong>Связь:</strong> ${(() => {
         const badge = `<span class="contact-badge">${order.contactPref === 'call' ? 'Позвонить' : 'Написать'}</span>`;
         const detail = order.contactPref === 'call' ? escapeHtml(order.callTime || '') : escapeHtml(order.messenger || '');
@@ -95,7 +98,7 @@ function renderOrders() {
       ${order.comment ? `<div class="order-row"><strong>Комментарий:</strong> ${escapeHtml(order.comment)}</div>` : ''}
       <div class="order-row">
         <label for="st-${order.id}" class="muted">Статус:</label>
-        <select id="st-${order.id}" data-action="status" data-id="${order.id}">
+        <select id="st-${order.id}" data-action="status" data-id="${order.id}" class="status-${order.status || 'new'}">
           <option value="new" ${order.status==='new'?'selected':''}>Новый</option>
           <option value="progress" ${order.status==='progress'?'selected':''}>В работе</option>
           <option value="done" ${order.status==='done'?'selected':''}>Выполнен</option>
@@ -115,7 +118,7 @@ function renderOrders() {
       const id = +e.target.dataset.id;
       const orders = loadOrders();
       const o = orders.find(x => x.id === id);
-      if (o) { o.status = e.target.value; saveOrders(orders); renderStats(loadOrders()); }
+      if (o) { o.status = e.target.value; e.target.className = 'status-' + e.target.value; saveOrders(orders); renderStats(loadOrders()); }
     });
   });
   list.querySelectorAll('button[data-action="delete"]').forEach(btn => {
@@ -177,9 +180,10 @@ function initLogin() {
   });
 }
 
-function showDash() {
+async function showDash() {
   $('loginView').hidden = true;
   $('dashView').hidden = false;
+  await fetchRemote();
   renderStats(loadOrders());
   renderOrders();
 }
@@ -189,9 +193,22 @@ function logout() {
   location.reload();
 }
 
-// Optional: fetch orders from backend
+// Fetch orders from backend (shared across browsers) when ORDER_API is configured
 async function fetchRemote() {
-  // placeholder: if you configure ORDER_API with a GET endpoint, fetch here
+  if (typeof ORDER_API === 'undefined' || !ORDER_API) return;
+  try {
+    const res = await fetch(ORDER_API + '?action=list', { method: 'GET', mode: 'cors' });
+    if (!res.ok) return;
+    const remote = await res.json();
+    if (!Array.isArray(remote)) return;
+    const local = loadOrders();
+    const byId = new Map(local.map(o => [o.id, o]));
+    remote.forEach(r => { if (!byId.has(r.id)) byId.set(r.id, r); });
+    const merged = [...byId.values()].sort((a, b) => (b.id || 0) - (a.id || 0));
+    saveOrders(merged);
+  } catch (e) {
+    // backend unavailable; keep local data
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -202,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   $('statusFilter').addEventListener('change', () => { renderOrders(); renderStats(loadOrders()); });
-  $('refreshBtn').addEventListener('click', () => { renderOrders(); renderStats(loadOrders()); });
+  $('refreshBtn').addEventListener('click', async () => { await fetchRemote(); renderOrders(); renderStats(loadOrders()); });
   $('exportBtn').addEventListener('click', exportCSV);
   $('clearBtn').addEventListener('click', () => {
     if (!confirm('Удалить все локальные заказы?')) return;

@@ -156,8 +156,10 @@
             <input id="custName" name="name" type="text" required maxlength="80" autocomplete="name" placeholder="Ваше имя">
             <label for="custPhone">Телефон</label>
             <input id="custPhone" name="phone" type="tel" required maxlength="20" autocomplete="tel" inputmode="tel" pattern="[0-9+\(\)\-\s]{10,20}" placeholder="+7 (___) ___-__-__">
+            <label for="custAddress">Адрес доставки</label>
+            <textarea id="custAddress" name="address" maxlength="300" placeholder="Город, улица, дом, квартира, индекс"></textarea>
             <label for="custComment">Комментарий</label>
-            <textarea id="custComment" name="comment" maxlength="500" placeholder="Адрес доставки или пожелания"></textarea>
+            <textarea id="custComment" name="comment" maxlength="500" placeholder="Пожелания к заказу"></textarea>
 
             <fieldset class="contact-pref">
               <legend>Как удобнее связаться</legend>
@@ -169,7 +171,7 @@
               <input id="custMessenger" name="messenger" type="text" maxlength="80" placeholder="Например: Telegram @username, WhatsApp, VK">
               <p class="form-note">Можно написать куда угодно — укажите удобный мессенджер или контакт, как вам удобнее.</p>
             </div>
-            <div id="callOptions" hidden>
+            <div id="callOptions">
               <label for="custCallTime">Удобное время для звонка</label>
               <input id="custCallTime" name="callTime" type="text" maxlength="60" placeholder="Например: сегодня 18:00–20:00">
             </div>
@@ -189,7 +191,7 @@
               <span class="success-icon" aria-hidden="true">✓</span>
               <div>
                 <h4>Заказ успешно создан</h4>
-                <p>Менеджер свяжется с вами в ближайшее свободное время.</p>
+                <p>Менеджер свяжется с вами в ближайшее свободное время или вы можете связаться сами.</p>
               </div>
             </div>
             <label for="orderText">Текст заказа</label>

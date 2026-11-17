@@ -212,12 +212,7 @@
     orderOverlay.addEventListener('mousedown', (e) => { orderMouseDownTarget = e.target; });
     orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay && orderMouseDownTarget === orderOverlay) closeOrder(); });
 
-    // Toggle contact preference fields
-    document.querySelectorAll('input[name=\"contactPref\"]').forEach(r => r.addEventListener('change', () => {
-      const v = document.querySelector('input[name=\"contactPref\"]:checked').value;
-      document.getElementById('writeOptions').hidden = v !== 'write';
-      document.getElementById('callOptions').hidden = v !== 'call';
-    }));
+    // Contact preference is a client wish; both fields stay visible.
     document.getElementById('copyOrder').addEventListener('click', () => {
       copyText(orderText.value);
       copyStatus.textContent = 'Текст скопирован.';
@@ -228,6 +223,7 @@
       const p = products[currentProduct];
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
       const comment = document.getElementById('custComment').value.trim();
       const contactPref = document.querySelector('input[name="contactPref"]:checked').value;
       const messenger = document.getElementById('custMessenger').value;
@@ -242,6 +238,7 @@
         `Цена: ${p.price}`,
         `Имя: ${name}`,
         `Телефон: ${phone}`,
+        address ? `Адрес доставки: ${address}` : null,
         contactLine,
         comment ? `Комментарий: ${comment}` : null
       ].filter(Boolean).join('\n');
@@ -252,7 +249,7 @@
         product: p.name,
         size: selectedSize,
         price: p.price,
-        name, phone, comment,
+        name, phone, address, comment,
         contactPref, messenger, callTime,
         status: 'new'
       };
