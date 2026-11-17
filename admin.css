@@ -113,3 +113,30 @@
     select.status-new { border-color: #7c5cff; color: #c9b8ff; }
     select.status-progress { border-color: #f0b429; color: #ffe08a; }
     select.status-done { border-color: #4ade80; color: #a7f3c0; }
+    /* Status tabs */
+    .status-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .status-tab {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .status-tab:hover { transform: translateY(-1px); }
+    .status-tab.active { box-shadow: 0 0 0 2px rgba(255,255,255,0.15) inset; }
+    .status-tab.status-new { border-color: #7c5cff; color: #c9b8ff; }
+    .status-tab.status-new.active { background: rgba(124, 92, 255, 0.18); }
+    .status-tab.status-progress { border-color: #f0b429; color: #ffe08a; }
+    .status-tab.status-progress.active { background: rgba(240, 180, 41, 0.18); }
+    .status-tab.status-done { border-color: #4ade80; color: #a7f3c0; }
+    .status-tab.status-done.active { background: rgba(74, 222, 128, 0.18); }
+    .status-tab[data-status="all"].active { background: rgba(255,255,255,0.08); }

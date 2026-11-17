@@ -46,6 +46,21 @@ function statusLabel(s) {
   return s === 'new' ? 'Новый' : s === 'progress' ? 'В работе' : s === 'done' ? 'Выполнен' : s;
 }
 
+function updateTabCounts() {
+  const orders = loadOrders();
+  const counts = {
+    all: orders.length,
+    new: orders.filter(o => o.status === 'new').length,
+    progress: orders.filter(o => o.status === 'progress').length,
+    done: orders.filter(o => o.status === 'done').length
+  };
+  document.querySelectorAll('.status-tab').forEach(tab => {
+    const s = tab.dataset.status;
+    const base = tab.textContent.replace(/\s*\(\d+\)$/, '');
+    tab.textContent = `${base} (${counts[s]})`;
+  });
+}
+
 function renderStats(orders) {
   const el = $('stats');
   const total = orders.length;
@@ -60,8 +75,10 @@ function renderStats(orders) {
   `;
 }
 
+let currentFilter = 'all';
+
 function renderOrders() {
-  const filter = $('statusFilter').value;
+  const filter = currentFilter;
   let orders = loadOrders();
   if (filter !== 'all') orders = orders.filter(o => o.status === filter);
 
@@ -107,7 +124,7 @@ function renderOrders() {
       const id = +e.target.dataset.id;
       const orders = loadOrders();
       const o = orders.find(x => x.id === id);
-      if (o) { o.status = e.target.value; e.target.className = 'status-' + e.target.value; saveOrders(orders); renderStats(loadOrders()); }
+      if (o) { o.status = e.target.value; e.target.className = 'status-' + e.target.value; saveOrders(orders); renderStats(loadOrders()); updateTabCounts(); }
     });
   });
   list.querySelectorAll('button[data-action="delete"]').forEach(btn => {
@@ -175,6 +192,7 @@ async function showDash() {
   await fetchRemote();
   renderStats(loadOrders());
   renderOrders();
+  updateTabCounts();
 }
 
 function logout() {
@@ -207,8 +225,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initLogin();
   }
 
-  $('statusFilter').addEventListener('change', () => { renderOrders(); renderStats(loadOrders()); });
-  $('refreshBtn').addEventListener('click', async () => { await fetchRemote(); renderOrders(); renderStats(loadOrders()); });
+  document.querySelectorAll('.status-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      currentFilter = tab.dataset.status;
+      document.querySelectorAll('.status-tab').forEach(t => t.classList.toggle('active', t === tab));
+      updateTabCounts();
+      renderOrders();
+      renderStats(loadOrders());
+    });
+  });
+  updateTabCounts();
+  $('refreshBtn').addEventListener('click', async () => { await fetchRemote(); renderOrders(); renderStats(loadOrders()); updateTabCounts(); });
   $('exportBtn').addEventListener('click', exportCSV);
   $('clearBtn').addEventListener('click', () => {
     if (!confirm('Удалить все локальные заказы?')) return;

@@ -38,12 +38,12 @@
       <div class="admin-toolbar">
         <h1>Заказы</h1>
         <div class="toolbar-actions">
-          <select id="statusFilter">
-            <option value="all">Все статусы</option>
-            <option value="new">Новые</option>
-            <option value="progress">В работе</option>
-            <option value="done">Выполнены</option>
-          </select>
+          <div class="status-tabs" id="statusTabs">
+            <button type="button" class="status-tab active" data-status="all">Все</button>
+            <button type="button" class="status-tab status-new" data-status="new">Новые</button>
+            <button type="button" class="status-tab status-progress" data-status="progress">В работе</button>
+            <button type="button" class="status-tab status-done" data-status="done">Выполнены</button>
+          </div>
           <button type="button" class="btn btn-ghost" id="refreshBtn">Обновить</button>
           <button type="button" class="btn btn-ghost" id="exportBtn">Экспорт CSV</button>
           <button type="button" class="btn btn-ghost" id="clearBtn">Очистить локальные</button>
