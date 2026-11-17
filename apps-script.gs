@@ -21,10 +21,13 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const sh = getSheet();
+    // Prefix text fields with an apostrophe so Google Sheets does not interpret
+    // values like "+7 900 ..." or "=cmd" as formulas.
+    const t = (v) => (v == null ? '' : "'" + String(v));
     sh.appendRow([
-      data.id, data.created, data.product, data.size, data.price, data.name, data.phone,
-      data.address || '', data.comment || '', data.contactPref || '', data.messenger || '',
-      data.callTime || '', data.status || 'new'
+      data.id, data.created, t(data.product), data.size, t(data.price), t(data.name), t(data.phone),
+      t(data.address || ''), t(data.comment || ''), t(data.contactPref || ''), t(data.messenger || ''),
+      t(data.callTime || ''), t(data.status || 'new')
     ]);
     return ContentService.createTextOutput(JSON.stringify({ ok: true, id: data.id }))
       .setMimeType(ContentService.MimeType.JSON);
