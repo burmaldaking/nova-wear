@@ -3,560 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'none'; worker-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>NOVA WEAR — магазин одежды</title>
   <meta name="description" content="NOVA WEAR — современная одежда с характером. Новые коллекции, базовые вещи и лимитированные дропы. Доставка по всей России.">
-  <style>
-    :root {
-      --bg: #0b0b0f;
-      --surface: #14141b;
-      --text: #f4f4f6;
-      --muted: #a4a4b3;
-      --accent: #c8ff4d;
-      --accent-2: #7c5cff;
-      --border: rgba(255,255,255,0.08);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,0.25), transparent 60%),
-                  radial-gradient(900px 500px at -10% 20%, rgba(200,255,77,0.12), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .container { width: min(1120px, 100% - 40px); margin: 0 auto; }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(11,11,15,0.55);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s ease;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-    .logo {
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      font-size: 1.1rem;
-    }
-    .logo span { color: var(--accent); }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .nav-links a { transition: color 0.25s ease; }
-    .nav-links a:hover { color: var(--text); }
-    .menu-btn {
-      display: none;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 10px;
-      border-radius: 8px;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-      padding-top: 90px;
-      position: relative;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      margin-bottom: 14px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.1s forwards;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 28px; height: 1px;
-      background: var(--accent);
-    }
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 4.6rem);
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.25s forwards;
-    }
-    .hero p {
-      color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 520px;
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.4s forwards;
-    }
-    .actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.55s forwards;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 22px;
-      border-radius: 999px;
-      font-weight: 600;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-      border: 1px solid transparent;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #0b0b0f;
-      box-shadow: 0 10px 30px rgba(200,255,77,0.18);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(200,255,77,0.28); }
-    .btn-ghost {
-      border-color: var(--border);
-      color: var(--text);
-      background: rgba(255,255,255,0.02);
-    }
-    .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.2); }
-    .hero-visual {
-      position: relative;
-      height: 480px;
-      opacity: 0;
-      animation: fadeIn 1.1s ease 0.5s forwards;
-    }
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.7;
-      animation: float 8s ease-in-out infinite;
-    }
-    .orb.one { width: 220px; height: 220px; background: rgba(124,92,255,0.5); top: 20px; right: 30px; }
-    .orb.two { width: 160px; height: 160px; background: rgba(200,255,77,0.35); bottom: 40px; left: 10px; animation-delay: -3s; }
-    .card-stack {
-      position: absolute;
-      inset: 40px 20px;
-      display: grid;
-      gap: 16px;
-    }
-    .glass {
-      background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 22px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-    .glass h3 { font-size: 1rem; margin-bottom: 6px; }
-    .glass p { color: var(--muted); font-size: 0.92rem; }
-    .tag {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      background: rgba(200,255,77,0.12);
-      color: var(--accent);
-      border: 1px solid rgba(200,255,77,0.25);
-    }
-    .glass.main { transform: translateY(0); animation: floatCard 6s ease-in-out infinite; }
-    .glass.side { margin-left: 40px; animation: floatCard 7s ease-in-out infinite reverse; }
-
-    /* Sections */
-    section { padding: 90px 0; }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-    .section-head h2 {
-      font-size: clamp(1.7rem, 3vw, 2.4rem);
-      letter-spacing: -0.02em;
-    }
-    .section-head p { color: var(--muted); max-width: 420px; }
-
-    /* Products */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-    .product {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
-      transition: transform 0.35s ease, border-color 0.35s ease;
-      cursor: pointer;
-    }
-    .product:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.18); }
-    .product:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .thumb {
-      height: 220px;
-      position: relative;
-      overflow: hidden;
-      background: #1b1b24;
-    }
-    .thumb::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(11,11,15,0.55), transparent 50%);
-    }
-    .thumb .shape {
-      position: absolute;
-      border-radius: 24px;
-      transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
-    }
-    .product:hover .thumb .shape { transform: scale(1.08) rotate(-2deg); }
-    .t1 { inset: 20px; background: linear-gradient(135deg, #2a2640, #5b4bb7); }
-    .t2 { inset: 20px; background: linear-gradient(135deg, #2b3320, #7da62b); }
-    .t3 { inset: 20px; background: linear-gradient(135deg, #3a2328, #b85c6a); }
-    .t4 { inset: 20px; background: linear-gradient(135deg, #20303a, #3d8fb8); }
-    .label {
-      position: absolute;
-      left: 14px; bottom: 14px;
-      z-index: 2;
-      font-size: 0.78rem;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(11,11,15,0.7);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(6px);
-    }
-    .info { padding: 16px; }
-    .info h3 { font-size: 1rem; margin-bottom: 4px; }
-    .meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.92rem; }
-    .price { color: var(--text); font-weight: 600; }
-
-    /* Banner */
-    .banner {
-      background: linear-gradient(120deg, rgba(124,92,255,0.25), rgba(20,20,27,0.9) 45%, rgba(200,255,77,0.12));
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 36px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 20px;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-    }
-    .banner::after {
-      content: "";
-      position: absolute;
-      width: 240px; height: 240px;
-      right: -60px; top: -60px;
-      background: radial-gradient(circle, rgba(200,255,77,0.25), transparent 70%);
-      animation: pulse 5s ease-in-out infinite;
-    }
-    .banner h2 { font-size: 1.9rem; margin-bottom: 8px; }
-    .banner p { color: var(--muted); margin-bottom: 18px; }
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .stat {
-      background: rgba(11,11,15,0.35);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
-    }
-    .stat strong { display: block; font-size: 1.3rem; color: var(--accent); }
-    .stat span { color: var(--muted); font-size: 0.85rem; }
-
-    /* Modal */
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: rgba(5,5,8,0.72);
-      backdrop-filter: blur(8px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal.open { opacity: 1; visibility: visible; }
-    .modal-dialog {
-      width: min(980px, 100%);
-      max-height: 92vh;
-      overflow: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 0;
-      transform: translateY(16px) scale(0.98);
-      transition: transform 0.35s ease;
-      position: relative;
-    }
-    .modal.open .modal-dialog { transform: translateY(0) scale(1); }
-    .modal-close {
-      position: absolute;
-      top: 14px; right: 14px;
-      z-index: 3;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: rgba(20,20,27,0.8);
-      color: var(--text);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-    .gallery { padding: 22px; border-right: 1px solid var(--border); }
-    .view-main {
-      height: 360px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 12px;
-      background: #1b1b24;
-    }
-    .view-layer {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      padding: 18px;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    .view-layer .silhouette {
-      position: absolute;
-      inset: 30px 60px;
-      border-radius: 26px;
-      opacity: 0.95;
-    }
-    .view-label {
-      position: relative;
-      z-index: 2;
-      font-size: 0.8rem;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(11,11,15,0.6);
-      border: 1px solid var(--border);
-    }
-    .view-hint { position: relative; z-index: 2; color: var(--muted); font-size: 0.85rem; }
-    .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .thumb-btn {
-      height: 64px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #1b1b24;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      opacity: 0.7;
-      transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
-    }
-    .thumb-btn span { position: absolute; left: 8px; bottom: 6px; font-size: 0.7rem; color: #fff; text-shadow: 0 1px 8px #000; }
-    .thumb-btn.active { opacity: 1; border-color: var(--accent); transform: translateY(-2px); }
-    .gallery-nav { display: flex; gap: 8px; margin-top: 10px; }
-    .nav-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-      color: var(--text);
-      cursor: pointer;
-    }
-    .details { padding: 26px 24px 24px; }
-    .details .price-lg { color: var(--accent); font-size: 1.4rem; font-weight: 700; margin: 6px 0 14px; }
-    .details p { color: var(--muted); margin-bottom: 18px; }
-    .sizes h4, .details h4 { font-size: 0.95rem; margin-bottom: 10px; color: var(--text); }
-    .size-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-    .size {
-      min-width: 42px;
-      padding: 8px 10px;
-      text-align: center;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.9rem;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .size:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
-    .size.selected { background: var(--accent); color: #0b0b0f; border-color: var(--accent); font-weight: 600; }
-    .order-actions { margin: 18px 0 10px; }
-    .order-actions .btn { width: 100%; }
-    .btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-    .size-hint { color: var(--muted); font-size: 0.85rem; margin-top: 8px; min-height: 1.2em; }
-    .detail-list { list-style: none; color: var(--muted); display: grid; gap: 6px; font-size: 0.95rem; }
-    .detail-list strong { color: var(--text); font-weight: 500; }
-    .order-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(11,11,15,0.75);
-      backdrop-filter: blur(6px);
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
-      z-index: 5;
-      border-radius: 24px;
-    }
-    .order-overlay.open { opacity: 1; visibility: visible; }
-    .order-form {
-      width: min(420px, 100%);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-      position: relative;
-    }
-    .order-form h3 { margin-bottom: 4px; font-size: 1.15rem; }
-    .order-form p { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
-    .order-form label { display: block; font-size: 0.9rem; margin: 10px 0 6px; color: var(--muted); }
-    .order-form input, .order-form textarea {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-      color: var(--text);
-      font: inherit;
-    }
-    .order-form textarea { min-height: 70px; resize: vertical; }
-    .order-form .form-actions { display: flex; gap: 10px; margin-top: 14px; }
-    .order-form .form-actions .btn { flex: 1; padding: 12px; }
-    .order-close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
-    .order-summary { font-size: 0.9rem; color: var(--accent); margin-bottom: 6px; }
-
-    /* Footer */
-    footer {
-      padding: 50px 0 30px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    footer h4 { color: var(--text); margin-bottom: 10px; }
-    footer ul { list-style: none; display: grid; gap: 6px; }
-    .copy { font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 18px; }
-
-    /* Reveal */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.show { opacity: 1; transform: translateY(0); }
-
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-18px) translateX(8px); }
-    }
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.15); opacity: 1; }
-    }
-
-    /* Mobile */
-    @media (max-width: 900px) {
-      .hero-grid, .banner { grid-template-columns: 1fr; }
-      .hero-visual { height: 360px; order: -1; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .section-head { flex-direction: column; align-items: flex-start; }
-      .modal-dialog { grid-template-columns: 1fr; max-height: 94vh; }
-      .gallery { border-right: none; border-bottom: 1px solid var(--border); }
-      .view-main { height: 300px; }
-    }
-    @media (max-width: 640px) {
-      .menu-btn { display: inline-flex; }
-      .nav-links {
-        position: absolute;
-        top: 68px; left: 0; right: 0;
-        background: rgba(11,11,15,0.97);
-        border-bottom: 1px solid var(--border);
-        flex-direction: column;
-        padding: 16px 20px 22px;
-        gap: 14px;
-        transform: translateY(-10px);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease, transform 0.25s ease;
-      }
-      .nav-links.open {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-      .grid { grid-template-columns: 1fr; }
-      .hero { min-height: auto; padding-bottom: 40px; }
-      .hero-visual { height: 300px; }
-      .card-stack { inset: 20px 0; }
-      .glass.side { margin-left: 20px; }
-      .stats { grid-template-columns: 1fr 1fr 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-      section { padding: 64px 0; }
-      .modal { padding: 10px; }
-      .view-main { height: 240px; }
-      .thumbs { grid-template-columns: repeat(4, 1fr); }
-      .details { padding: 18px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <div class="container nav">
-      <a href="#" class="logo">NOVA<span>WEAR</span></a>
+      <a href="index.html" class="logo">NOVA<span>WEAR</span></a>
       <button class="menu-btn" id="menuBtn" aria-label="Открыть меню">Меню</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#new">Новинки</a></li>
@@ -589,8 +45,8 @@
               <span class="tag">Лимитировано</span>
             </div>
             <div class="glass side">
-              <h3>Бесплатная доставка</h3>
-              <p>По России от 5 000 ₽. Примерка и лёгкий возврат в течение 14 дней.</p>
+              <h3>Доставка по России</h3>
+              <p>Возврат и обмен — в течение 14 дней. Поддержка ежедневно с 10:00 до 22:00.</p>
             </div>
           </div>
         </div>
@@ -605,7 +61,7 @@
       <div class="grid" id="productGrid">
         <article class="product reveal" tabindex="0" data-id="hoodie">
           <div class="thumb">
-            <div class="shape t1"></div>
+            <img src="assets/hoodie.svg" alt="Худи Orbit — графит" loading="lazy">
             <span class="label">New</span>
           </div>
           <div class="info">
@@ -615,7 +71,7 @@
         </article>
         <article class="product reveal" tabindex="0" data-id="tee">
           <div class="thumb">
-            <div class="shape t2"></div>
+            <img src="assets/tee.svg" alt="Футболка Pulse — чёрный с лаймовым акцентом" loading="lazy">
             <span class="label">Hit</span>
           </div>
           <div class="info">
@@ -625,7 +81,7 @@
         </article>
         <article class="product reveal" tabindex="0" data-id="cargo">
           <div class="thumb">
-            <div class="shape t3"></div>
+            <img src="assets/cargo.svg" alt="Брюки-карго Vector — терракота" loading="lazy">
             <span class="label">Drop</span>
           </div>
           <div class="info">
@@ -635,7 +91,7 @@
         </article>
         <article class="product reveal" tabindex="0" data-id="jacket">
           <div class="thumb">
-            <div class="shape t4"></div>
+            <img src="assets/jacket.svg" alt="Ветровка Flow — синий сталь" loading="lazy">
             <span class="label">Basic</span>
           </div>
           <div class="info">
@@ -654,9 +110,9 @@
           <a href="#contacts" class="btn btn-primary">Найти магазин</a>
         </div>
         <div class="stats">
-          <div class="stat"><strong>120+</strong><span>моделей</span></div>
+          <div class="stat"><strong>4</strong><span>модели в каталоге</span></div>
           <div class="stat"><strong>14</strong><span>дней на возврат</span></div>
-          <div class="stat"><strong>24/7</strong><span>поддержка</span></div>
+          <div class="stat"><strong>10–22</strong><span>на связи</span></div>
         </div>
       </div>
     </section>
@@ -690,20 +146,38 @@
         <ul class="detail-list" id="modalMeta"></ul>
       </div>
       <div class="order-overlay" id="orderOverlay">
-        <form class="order-form" id="orderForm">
+        <form class="order-form" id="orderForm" method="post" action="index.html">
           <button type="button" class="order-close" id="orderClose" aria-label="Закрыть">&times;</button>
           <h3>Оформление заказа</h3>
           <div class="order-summary" id="orderSummary"></div>
-          <p>Заполните данные — откроется сообщение в VK группы NOVA WEAR с текстом заказа.</p>
-          <label for="custName">Имя</label>
-          <input id="custName" name="name" type="text" required placeholder="Ваше имя">
-          <label for="custPhone">Телефон</label>
-          <input id="custPhone" name="phone" type="tel" required placeholder="+7 (___) ___-__-__">
-          <label for="custComment">Комментарий</label>
-          <textarea id="custComment" name="comment" placeholder="Адрес доставки или пожелания"></textarea>
-          <div class="form-actions">
-            <button type="button" class="btn btn-ghost" id="orderCancel">Назад</button>
-            <button type="submit" class="btn btn-primary">Отправить в VK</button>
+          <div id="orderFields">
+            <p>Заполните данные. Текст заказа скопируется, а в новом окне откроется чат VK — вставьте сообщение и отправьте его.</p>
+            <label for="custName">Имя</label>
+            <input id="custName" name="name" type="text" required maxlength="80" autocomplete="name" placeholder="Ваше имя">
+            <label for="custPhone">Телефон</label>
+            <input id="custPhone" name="phone" type="tel" required maxlength="20" autocomplete="tel" inputmode="tel" pattern="[0-9+\(\)\-\s]{10,20}" placeholder="+7 (___) ___-__-__">
+            <label for="custComment">Комментарий</label>
+            <textarea id="custComment" name="comment" maxlength="500" placeholder="Адрес доставки или пожелания"></textarea>
+            <label class="consent" for="consent">
+              <input type="checkbox" id="consent" name="consent" required>
+              <span>Я принимаю <a href="terms.html" target="_blank" rel="noopener noreferrer">условия заказа</a> и <a href="privacy.html" target="_blank" rel="noopener noreferrer">политику конфиденциальности</a>, даю согласие на обработку персональных данных.</span>
+            </label>
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="orderCancel">Назад</button>
+              <button type="submit" class="btn btn-primary">Отправить в VK</button>
+            </div>
+            <p class="form-note">Сайт не хранит ваши данные. Сообщение отправляется вами в VK.</p>
+          </div>
+          <div class="order-success" id="orderSuccess" hidden>
+            <p><strong>Текст заказа скопирован.</strong> Вставьте его в чат VK и отправьте сообщение.</p>
+            <label for="orderText">Текст заказа</label>
+            <textarea id="orderText" readonly></textarea>
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="copyOrder">Скопировать ещё раз</button>
+              <a class="btn btn-primary" id="vkLink" href="https://vk.ru/nightsf" target="_blank" rel="noopener noreferrer">Открыть VK</a>
+            </div>
+            <p class="form-note" id="copyStatus" role="status"></p>
+            <button type="button" class="btn btn-ghost" id="orderDone">Готово</button>
           </div>
         </form>
       </div>
@@ -719,9 +193,10 @@
       <div>
         <h4>Покупателям</h4>
         <ul>
-          <li><a href="#">Доставка и оплата</a></li>
-          <li><a href="#">Обмен и возврат</a></li>
-          <li><a href="#">Таблица размеров</a></li>
+          <li><a href="terms.html">Условия заказа</a></li>
+          <li><a href="terms.html#delivery">Доставка и возврат</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+          <li><a href="terms.html#requisites">Реквизиты</a></li>
         </ul>
       </div>
       <div>
@@ -729,192 +204,13 @@
         <ul>
           <li><a href="tel:+74951234567">+7 (495) 123-45-67</a></li>
           <li><a href="mailto:hello@novawear.store">hello@novawear.store</a></li>
-          <li><a href="#">@novawear.store</a></li>
+          <li><a href="https://vk.ru/nightsf" target="_blank" rel="noopener noreferrer">@novawear.store</a></li>
         </ul>
       </div>
     </div>
-    <div class="container copy">© 2026 NOVA WEAR. Все права защищены.</div>
+    <div class="container copy">© 2026 NOVA WEAR. <a href="terms.html">Условия заказа</a> · <a href="privacy.html">Политика конфиденциальности</a></div>
   </footer>
 
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.getElementById('navLinks');
-    menuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      menuBtn.textContent = navLinks.classList.contains('open') ? 'Закрыть' : 'Меню';
-    });
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      menuBtn.textContent = 'Меню';
-    }));
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    const products = {
-      hoodie: {
-        name: 'Худи «Orbit»',
-        price: '4 990 ₽',
-        tag: 'New',
-        desc: 'Свободное худи из плотного хлопка с начёсом. Мягкая посадка оверсайз, заниженная линия плеча и глубокий капюшон — для комфорта в движении.',
-        sizes: ['S', 'M', 'L', 'XL'],
-        meta: [['Цвет', 'Графит'], ['Состав', '80% хлопок, 20% полиэстер'], ['Плотность', '420 г/м²'], ['Уход', 'Деликатная стирка 30°']],
-        palette: ['#2a2640', '#5b4bb7', '#8e7dff']
-      },
-      tee: {
-        name: 'Футболка «Pulse»',
-        price: '2 290 ₽',
-        tag: 'Hit',
-        desc: 'Базовая футболка прямого кроя из дышащего хлопка. Контрастный акцент и плотная горловина держат форму после множества стирок.',
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
-        meta: [['Цвет', 'Лайм / чёрный'], ['Состав', '100% хлопок'], ['Плотность', '240 г/м²'], ['Уход', 'Стирка 30°']],
-        palette: ['#2b3320', '#7da62b', '#c8ff4d']
-      },
-      cargo: {
-        name: 'Брюки-карго «Vector»',
-        price: '5 490 ₽',
-        tag: 'Drop',
-        desc: 'Функциональные карго с регулируемым поясом и объёмными карманами. Ткань с небольшим стрейчем не сковывает движения в течение дня.',
-        sizes: ['28', '30', '32', '34', '36'],
-        meta: [['Цвет', 'Терракота'], ['Состав', '97% хлопок, 3% эластан'], ['Посадка', 'Relaxed fit'], ['Уход', 'Стирка 30°']],
-        palette: ['#3a2328', '#b85c6a', '#e6a0a8']
-      },
-      jacket: {
-        name: 'Ветровка «Flow»',
-        price: '6 790 ₽',
-        tag: 'Basic',
-        desc: 'Лёгкая ветровка с водоотталкивающей пропиткой и скрытым капюшоном. Защищает от ветра и легко складывается в сумку.',
-        sizes: ['S', 'M', 'L', 'XL'],
-        meta: [['Цвет', 'Синий сталь'], ['Состав', '100% нейлон'], ['Подклад', 'Сетчатая'], ['Уход', 'Бережная стирка 30°']],
-        palette: ['#20303a', '#3d8fb8', '#8fd3f4']
-      }
-    };
-    const views = [
-      { name: 'Спереди', inset: '30px 60px', transform: 'none', extra: 'linear-gradient(to bottom, rgba(255,255,255,0.18), transparent 40%)' },
-      { name: 'Сзади', inset: '34px 64px', transform: 'scaleX(0.98)', extra: 'linear-gradient(to top, rgba(0,0,0,0.25), transparent 45%)' },
-      { name: 'Сбоку', inset: '30px 90px 30px 40px', transform: 'skewY(-1deg)', extra: 'linear-gradient(90deg, rgba(0,0,0,0.35), transparent 55%)' },
-      { name: 'Детали', inset: '70px 70px', transform: 'scale(1.05)', extra: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%)' }
-    ];
-
-    const modal = document.getElementById('productModal');
-    const viewMain = document.getElementById('viewMain');
-    const viewThumbs = document.getElementById('viewThumbs');
-    const orderBtn = document.getElementById('orderBtn');
-    const orderOverlay = document.getElementById('orderOverlay');
-    const orderForm = document.getElementById('orderForm');
-    const sizeHint = document.getElementById('sizeHint');
-    let currentProduct = null;
-    let currentView = 0;
-    let selectedSize = null;
-    const VK_GROUP = 'https://vk.ru/nightsf';
-
-    function renderView() {
-      if (!currentProduct) return;
-      const p = products[currentProduct];
-      const v = views[currentView];
-      viewMain.innerHTML = `<div class="view-layer" style="background: linear-gradient(160deg, ${p.palette[0]}, ${p.palette[1]});">
-        <div class="silhouette" style="inset:${v.inset};transform:${v.transform};background:linear-gradient(135deg, ${p.palette[2]}, ${p.palette[1]}), ${v.extra};"></div>
-        <span class="view-label">${v.name}</span>
-        <span class="view-hint">${currentView + 1} / ${views.length}</span>
-      </div>`;
-      [...viewThumbs.children].forEach((btn, i) => btn.classList.toggle('active', i === currentView));
-    }
-
-    function setSelectedSize(size, btn) {
-      selectedSize = size;
-      document.querySelectorAll('#modalSizes .size').forEach(b => b.classList.toggle('selected', b === btn));
-      orderBtn.disabled = !selectedSize;
-      sizeHint.textContent = selectedSize ? `Выбран размер: ${selectedSize}` : 'Сначала выберите размер';
-    }
-
-    function openModal(id) {
-      currentProduct = id;
-      currentView = 0;
-      selectedSize = null;
-      orderBtn.disabled = true;
-      sizeHint.textContent = 'Сначала выберите размер';
-      orderOverlay.classList.remove('open');
-      orderForm.reset();
-      const p = products[id];
-      document.getElementById('modalTitle').textContent = p.name;
-      document.getElementById('modalPrice').textContent = p.price;
-      document.getElementById('modalDesc').textContent = p.desc;
-      document.getElementById('modalTag').textContent = p.tag;
-      document.getElementById('modalSizes').innerHTML = p.sizes.map(s => `<button type="button" class="size" data-size="${s}">${s}</button>`).join('');
-      document.getElementById('modalMeta').innerHTML = p.meta.map(([k,val]) => `<li><strong>${k}:</strong> ${val}</li>`).join('');
-      document.querySelectorAll('#modalSizes .size').forEach(btn => btn.addEventListener('click', () => setSelectedSize(btn.dataset.size, btn)));
-      viewThumbs.innerHTML = views.map((v, i) => `<button class="thumb-btn ${i===0?'active':''}" data-i="${i}" aria-label="${v.name}">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg, ${p.palette[0]}, ${p.palette[2]});"></div><span>${v.name}</span></button>`).join('');
-      viewThumbs.querySelectorAll('.thumb-btn').forEach(btn => btn.addEventListener('click', () => { currentView = +btn.dataset.i; renderView(); }));
-      renderView();
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      orderOverlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('.product[data-id]').forEach(card => {
-      card.addEventListener('click', () => openModal(card.dataset.id));
-      card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card.dataset.id); } });
-    });
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    document.getElementById('prevView').addEventListener('click', () => { currentView = (currentView - 1 + views.length) % views.length; renderView(); });
-    document.getElementById('nextView').addEventListener('click', () => { currentView = (currentView + 1) % views.length; renderView(); });
-    document.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('open')) return;
-      if (e.key === 'Escape') {
-        if (orderOverlay.classList.contains('open')) orderOverlay.classList.remove('open');
-        else closeModal();
-      }
-      if (!orderOverlay.classList.contains('open')) {
-        if (e.key === 'ArrowLeft') { currentView = (currentView - 1 + views.length) % views.length; renderView(); }
-        if (e.key === 'ArrowRight') { currentView = (currentView + 1) % views.length; renderView(); }
-      }
-    });
-
-    function openOrder() {
-      if (!currentProduct || !selectedSize) return;
-      const p = products[currentProduct];
-      document.getElementById('orderSummary').textContent = `${p.name} · размер ${selectedSize} · ${p.price}`;
-      orderOverlay.classList.add('open');
-    }
-    function closeOrder() { orderOverlay.classList.remove('open'); }
-    orderBtn.addEventListener('click', openOrder);
-    document.getElementById('orderClose').addEventListener('click', closeOrder);
-    document.getElementById('orderCancel').addEventListener('click', closeOrder);
-    orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay) closeOrder(); });
-    orderForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const p = products[currentProduct];
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const comment = document.getElementById('custComment').value.trim();
-      const msg = [
-        'Здравствуйте! Хочу оформить заказ в NOVA WEAR.',
-        `Товар: ${p.name}`,
-        `Размер: ${selectedSize}`,
-        `Цена: ${p.price}`,
-        `Имя: ${name}`,
-        `Телефон: ${phone}`,
-        comment ? `Комментарий: ${comment}` : null
-      ].filter(Boolean).join('\n');
-      const url = VK_GROUP + '?text=' + encodeURIComponent(msg);
-      window.open(url, '_blank');
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

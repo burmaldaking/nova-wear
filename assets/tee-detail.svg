@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="320 160 220 190" role="img" aria-label="Футболка Pulse, чёрный с лаймовым акцентом">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d2218"/><stop offset="1" stop-color="#111210"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".45" r=".58">
+      <stop offset="0" stop-color="#c8ff4d" stop-opacity=".2"/><stop offset="1" stop-color="#c8ff4d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a4a57"/><stop offset=".55" stop-color="#2e2e38"/><stop offset="1" stop-color="#1d1d25"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#glow)"/>
+  <ellipse cx="400" cy="548" rx="168" ry="20" fill="#000" opacity=".38"/>
+
+  <!-- sleeves -->
+  <path d="M318 198 L252 236 C238 244 232 258 236 274 L248 318 C250 328 260 334 270 330 L330 308 Z" fill="url(#cloth)" stroke="#5e5e6c" stroke-width="2.5" stroke-opacity=".45"/>
+  <path d="M482 198 L548 236 C562 244 568 258 564 274 L552 318 C550 328 540 334 530 330 L470 308 Z" fill="url(#cloth)" stroke="#5e5e6c" stroke-width="2.5" stroke-opacity=".45"/>
+
+  <!-- body -->
+  <path d="M320 186 C348 172 452 172 480 186 L500 496 C500 510 490 518 478 518 L322 518 C310 518 300 510 300 496 Z" fill="url(#cloth)" stroke="#5e5e6c" stroke-width="2.5" stroke-opacity=".45"/>
+  <path d="M320 186 C348 172 452 172 480 186 L484 300 C438 318 362 318 316 300 Z" fill="url(#sheen)"/>
+
+  <!-- collar -->
+  <path d="M352 180 C360 204 376 214 400 214 C424 214 440 204 448 180 C440 168 360 168 352 180 Z" fill="#0b0b0e"/>
+  <path d="M352 180 C360 204 376 214 400 214 C424 214 440 204 448 180" fill="none" stroke="#c8ff4d" stroke-width="5"/>
+
+  <!-- accent -->
+  <rect x="356" y="264" width="88" height="9" rx="4.5" fill="#c8ff4d"/>
+  <rect x="356" y="282" width="44" height="6" rx="3" fill="#c8ff4d" opacity=".55"/>
+
+  <!-- hem stitching -->
+  <path d="M306 498 L494 498" stroke="#2c2c33" stroke-width="4" stroke-linecap="round"/>
+
+  <rect x="468" y="504" width="56" height="20" rx="3" fill="#0b0b0e" opacity=".9"/>
+  <text x="496" y="519" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#c8ff4d" text-anchor="middle" letter-spacing="1">PULSE</text>
+</svg>

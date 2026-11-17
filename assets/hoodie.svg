@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Худи Orbit, графит">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22222d"/><stop offset="1" stop-color="#121217"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".6">
+      <stop offset="0" stop-color="#8e7dff" stop-opacity=".22"/><stop offset="1" stop-color="#8e7dff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5c5c6b"/><stop offset=".55" stop-color="#43434f"/><stop offset="1" stop-color="#2c2c36"/>
+    </linearGradient>
+    <linearGradient id="hoodIn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1e26"/><stop offset="1" stop-color="#2f2f3a"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#glow)"/>
+  <ellipse cx="400" cy="548" rx="172" ry="20" fill="#000" opacity=".38"/>
+
+  <!-- sleeves -->
+  <path d="M318 205 C286 214 262 250 250 312 L236 396 C233 424 248 440 270 437 L304 429 L314 300 Z" fill="url(#cloth)"/>
+  <path d="M482 205 C514 214 538 250 550 312 L564 396 C567 424 552 440 530 437 L496 429 L486 300 Z" fill="url(#cloth)"/>
+  <rect x="233" y="404" width="74" height="42" rx="18" transform="rotate(-7 270 425)" fill="#33333e"/>
+  <rect x="493" y="404" width="74" height="42" rx="18" transform="rotate(7 530 425)" fill="#33333e"/>
+
+  <!-- body -->
+  <path d="M320 196 C350 178 450 178 480 196 L512 470 C514 494 500 508 476 510 L324 510 C300 508 286 494 288 470 Z" fill="url(#cloth)"/>
+  <path d="M320 196 C350 178 450 178 480 196 L492 300 C440 330 360 330 308 300 Z" fill="url(#sheen)"/>
+
+  <!-- hood -->
+  <path d="M326 200 C322 148 360 112 400 112 C440 112 478 148 474 200 C470 236 446 254 400 254 C354 254 330 236 326 200 Z" fill="url(#cloth)"/>
+  <path d="M348 204 C346 168 368 140 400 138 C432 140 454 168 452 204 C448 236 428 248 400 248 C372 248 352 236 348 204 Z" fill="url(#hoodIn)"/>
+  <path d="M326 200 C330 238 356 258 400 258 L400 276 C346 276 312 244 312 204 Z" fill="#33333e"/>
+
+  <!-- cords -->
+  <path d="M378 250 L372 322" stroke="#c8ff4d" stroke-width="7" stroke-linecap="round"/>
+  <path d="M422 250 L428 322" stroke="#c8ff4d" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="372" cy="330" r="8" fill="#c8ff4d"/>
+  <circle cx="428" cy="330" r="8" fill="#c8ff4d"/>
+
+  <!-- pocket -->
+  <path d="M332 372 L468 372 L458 462 C457 470 450 476 442 476 L358 476 C350 476 343 470 342 462 Z" fill="none" stroke="#2a2a33" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- hem -->
+  <path d="M294 478 L506 478 L508 496 C509 505 502 512 492 512 L308 512 C298 512 291 505 292 496 Z" fill="#30303b"/>
+
+  <!-- label -->
+  <rect x="470" y="500" width="58" height="22" rx="3" fill="#0f0f14" opacity=".85"/>
+  <text x="499" y="516" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#c8ff4d" text-anchor="middle" letter-spacing="1">ORBIT</text>
+</svg>

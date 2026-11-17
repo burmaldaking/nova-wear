@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="300 260 220 180" role="img" aria-label="Брюки-карго Vector, терракота">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#271a19"/><stop offset="1" stop-color="#131011"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".45" r=".6">
+      <stop offset="0" stop-color="#e07a86" stop-opacity=".2"/><stop offset="1" stop-color="#e07a86" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b5685c"/><stop offset=".55" stop-color="#9a5146"/><stop offset="1" stop-color="#7c3d35"/>
+    </linearGradient>
+    <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a463c"/><stop offset="1" stop-color="#6c332c"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#glow)"/>
+  <ellipse cx="400" cy="552" rx="176" ry="20" fill="#000" opacity=".38"/>
+
+  <!-- waistband -->
+  <path d="M318 150 L482 150 L486 196 L314 196 Z" fill="url(#dark)"/>
+  <path d="M318 158 L482 158" stroke="#6f352e" stroke-width="4"/>
+  <rect x="352" y="164" width="24" height="22" rx="4" fill="#5a2a24"/>
+  <rect x="424" y="164" width="24" height="22" rx="4" fill="#5a2a24"/>
+
+  <!-- legs -->
+  <path d="M314 196 L398 196 L392 500 L318 506 C310 506 306 500 306 492 L298 240 C297 214 304 200 314 196 Z" fill="url(#cloth)"/>
+  <path d="M402 196 L486 196 C496 200 503 214 502 240 L494 492 C494 500 490 506 482 506 L408 500 Z" fill="url(#cloth)"/>
+  <path d="M314 196 L398 196 L396 240 L306 240 Z" fill="url(#sheen)"/>
+
+  <!-- crotch seam -->
+  <path d="M400 200 L400 340" stroke="#6f352e" stroke-width="4" opacity=".7"/>
+
+  <!-- pockets -->
+  <path d="M320 300 L362 300 L362 366 C362 372 358 376 352 376 L330 376 C324 376 320 372 320 366 Z" fill="none" stroke="#74382f" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M438 300 L480 300 L480 366 C480 372 476 376 470 376 L448 376 C442 376 438 372 438 366 Z" fill="none" stroke="#74382f" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- cuffs -->
+  <path d="M316 486 L392 480 L392 508 L318 512 C312 512 310 508 310 502 Z" fill="#713730"/>
+  <path d="M408 480 L484 486 L490 502 C490 508 488 512 482 512 L408 508 Z" fill="#713730"/>
+
+  <!-- stitching -->
+  <path d="M338 210 L333 470" stroke="#7c3d35" stroke-width="3" opacity=".7"/>
+  <path d="M462 210 L467 470" stroke="#7c3d35" stroke-width="3" opacity=".7"/>
+
+  <rect x="452" y="498" width="56" height="20" rx="3" fill="#1a1113" opacity=".8"/>
+  <text x="480" y="513" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#f3b6bc" text-anchor="middle" letter-spacing="1">VECTOR</text>
+</svg>
