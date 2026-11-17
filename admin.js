@@ -74,10 +74,6 @@ function renderOrders() {
   orders.forEach(order => {
     const card = document.createElement('article');
     card.className = `order-card ${order.status || 'new'}`;
-    const writeLink = messengerLink(order);
-    const writeBtn = writeLink
-      ? `<a class="btn btn-ghost" href="${writeLink}" target="_blank" rel="noopener noreferrer">Написать</a>`
-      : `<button type="button" class="btn btn-ghost" data-action="copy-phone" data-id="${order.id}">Скопировать телефон</button>`;
     card.innerHTML = `
       <div class="order-head">
         <h3>${escapeHtml(order.name || '—')}</h3>
@@ -86,15 +82,9 @@ function renderOrders() {
       <div class="order-row"><strong>Товар:</strong> ${escapeHtml(order.product || '—')} · размер ${escapeHtml(order.size || '—')} · ${escapeHtml(order.price || '—')}</div>
       <div class="order-row"><strong>Телефон:</strong> <a href="tel:${escapeAttr(order.phone)}">${escapeHtml(order.phone || '—')}</a></div>
       ${order.address ? `<div class="order-row"><strong>Адрес доставки:</strong> ${escapeHtml(order.address)}</div>` : ''}
-      <div class="order-row"><strong>Связь:</strong> ${(() => {
-        const badge = `<span class="contact-badge">${order.contactPref === 'call' ? 'Позвонить' : 'Написать'}</span>`;
-        const detail = order.contactPref === 'call' ? escapeHtml(order.callTime || '') : escapeHtml(order.messenger || '');
-        const link = order.contactPref === 'call'
-          ? `tel:${escapeAttr(order.phone)}`
-          : (messengerLink(order) || null);
-        if (link) return `<a href="${link}" target="_blank" rel="noopener noreferrer">${badge}</a> ${detail}`;
-        return `${badge} ${detail}`;
-      })()}</div>
+      <div class="order-row"><strong>Связь:</strong> <span class="contact-badge">${order.contactPref === 'call' ? 'Позвонить' : 'Написать'}</span></div>
+      ${order.messenger ? `<div class="order-row"><strong>Куда написать:</strong> ${escapeHtml(order.messenger)}</div>` : ''}
+      ${order.callTime ? `<div class="order-row"><strong>Удобное время:</strong> ${escapeHtml(order.callTime)}</div>` : ''}
       ${order.comment ? `<div class="order-row"><strong>Комментарий:</strong> ${escapeHtml(order.comment)}</div>` : ''}
       <div class="order-row">
         <label for="st-${order.id}" class="muted">Статус:</label>
@@ -107,7 +97,6 @@ function renderOrders() {
       <div class="order-actions">
         <a class="btn btn-primary" href="tel:${escapeAttr(order.phone)}">Позвонить</a>
         <button type="button" class="btn btn-ghost" data-action="delete" data-id="${order.id}">Удалить</button>
-        ${writeBtn.replace('class="btn btn-ghost"', 'class="btn btn-ghost btn-write"')}
       </div>
     `;
     list.appendChild(card);
