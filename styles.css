@@ -515,7 +515,9 @@
     /* Mobile */
     @media (max-width: 900px) {
       .hero-grid, .banner { grid-template-columns: 1fr; }
-      .hero-visual { height: 360px; order: -1; }
+      .hero { padding-top: 100px; }
+      .hero-visual { height: auto; min-height: 320px; order: -1; margin-bottom: 20px; }
+      .card-stack { position: relative; inset: auto; }
       .grid { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .section-head { flex-direction: column; align-items: flex-start; }
@@ -543,8 +545,9 @@
         pointer-events: auto;
       }
       .grid { grid-template-columns: 1fr; }
-      .hero { min-height: auto; padding-bottom: 40px; }
-      .hero-visual { height: 300px; }
+      .hero { min-height: auto; padding-top: 110px; padding-bottom: 40px; }
+      .hero-visual { height: auto; min-height: 260px; margin-bottom: 24px; }
+      .card-stack { position: relative; inset: auto; }
       .card-stack { inset: 20px 0; }
       .glass.side { margin-left: 20px; }
       .stats { grid-template-columns: 1fr 1fr 1fr; }
