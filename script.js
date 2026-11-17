@@ -86,6 +86,9 @@
     let currentView = 0;
     let selectedSize = null;
     const VK_GROUP = 'https://vk.ru/nightsf';
+    // Backend endpoint for receiving orders (optional). Set to your Google Apps Script / form service URL.
+    // Leave empty to use local demo storage only.
+    const ORDER_API = '';
 
     function renderView() {
       if (!currentProduct) return;
@@ -208,6 +211,13 @@
     document.getElementById('orderDone').addEventListener('click', closeOrder);
     orderOverlay.addEventListener('mousedown', (e) => { orderMouseDownTarget = e.target; });
     orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay && orderMouseDownTarget === orderOverlay) closeOrder(); });
+
+    // Toggle contact preference fields
+    document.querySelectorAll('input[name=\"contactPref\"]').forEach(r => r.addEventListener('change', () => {
+      const v = document.querySelector('input[name=\"contactPref\"]:checked').value;
+      document.getElementById('writeOptions').hidden = v !== 'write';
+      document.getElementById('callOptions').hidden = v !== 'call';
+    }));
     document.getElementById('copyOrder').addEventListener('click', () => {
       copyText(orderText.value);
       copyStatus.textContent = 'Текст скопирован.';
@@ -219,6 +229,12 @@
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const comment = document.getElementById('custComment').value.trim();
+      const contactPref = document.querySelector('input[name="contactPref"]:checked').value;
+      const messenger = document.getElementById('custMessenger').value;
+      const callTime = document.getElementById('custCallTime').value.trim();
+      const contactLine = contactPref === 'call'
+        ? `Связь: позвонить${callTime ? ' (' + callTime + ')' : ''}`
+        : `Связь: написать (${messenger})`;
       const msg = [
         'Здравствуйте! Хочу оформить заказ в NOVA WEAR.',
         `Товар: ${p.name}`,
@@ -226,8 +242,29 @@
         `Цена: ${p.price}`,
         `Имя: ${name}`,
         `Телефон: ${phone}`,
+        contactLine,
         comment ? `Комментарий: ${comment}` : null
       ].filter(Boolean).join('\n');
+
+      const orderRecord = {
+        id: Date.now(),
+        created: new Date().toISOString(),
+        product: p.name,
+        size: selectedSize,
+        price: p.price,
+        name, phone, comment,
+        contactPref, messenger, callTime,
+        status: 'new'
+      };
+      try {
+        const list = JSON.parse(localStorage.getItem('nova_orders') || '[]');
+        list.unshift(orderRecord);
+        localStorage.setItem('nova_orders', JSON.stringify(list));
+      } catch (e) {}
+      if (typeof ORDER_API !== 'undefined' && ORDER_API) {
+        fetch(ORDER_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderRecord), mode: 'cors' }).catch(() => {});
+      }
+
       copyText(msg);
       orderText.value = msg;
       vkLink.href = VK_GROUP;

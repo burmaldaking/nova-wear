@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self' https:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'none'; worker-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Админ-панель — NOVA WEAR</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo">NOVA<span>WEAR</span></a>
+      <span class="admin-badge">Админ-панель</span>
+      <a class="legal-back" href="index.html">← На сайт</a>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+    <!-- Login -->
+    <section id="loginView" class="admin-card">
+      <h1>Вход для менеджера</h1>
+      <p class="muted">Введите пароль, чтобы увидеть заказы.</p>
+      <form id="loginForm">
+        <label for="adminPass">Пароль</label>
+        <input id="adminPass" type="password" required autocomplete="current-password" placeholder="Пароль">
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <p class="form-note" id="loginError" role="alert"></p>
+      </form>
+      <p class="form-note">Пароль задаётся в файле <code>admin.js</code> (константа <code>ADMIN_PASSWORD</code>). Смените его перед публикацией.</p>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashView" hidden>
+      <div class="admin-toolbar">
+        <h1>Заказы</h1>
+        <div class="toolbar-actions">
+          <select id="statusFilter">
+            <option value="all">Все статусы</option>
+            <option value="new">Новые</option>
+            <option value="progress">В работе</option>
+            <option value="done">Выполнены</option>
+          </select>
+          <button type="button" class="btn btn-ghost" id="refreshBtn">Обновить</button>
+          <button type="button" class="btn btn-ghost" id="exportBtn">Экспорт CSV</button>
+          <button type="button" class="btn btn-ghost" id="clearBtn">Очистить локальные</button>
+          <button type="button" class="btn btn-ghost" id="logoutBtn">Выйти</button>
+        </div>
+      </div>
+
+      <div class="admin-stats" id="stats"></div>
+
+      <div id="ordersList" class="orders-list"></div>
+      <div id="emptyState" class="empty-state" hidden>
+        <p>Заказов пока нет.</p>
+        <p class="form-note">Заказы появляются здесь после оформления на сайте (сохраняются в браузере менеджера). Для сбора заказов от всех покупателей подключите бэкенд — см. README.md.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container copy">© 2026 NOVA WEAR. <a href="index.html">На сайт</a> · <a href="privacy.html">Политика конфиденциальности</a></div>
+  </footer>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>

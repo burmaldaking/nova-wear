@@ -158,6 +158,26 @@
             <input id="custPhone" name="phone" type="tel" required maxlength="20" autocomplete="tel" inputmode="tel" pattern="[0-9+\(\)\-\s]{10,20}" placeholder="+7 (___) ___-__-__">
             <label for="custComment">Комментарий</label>
             <textarea id="custComment" name="comment" maxlength="500" placeholder="Адрес доставки или пожелания"></textarea>
+
+            <fieldset class="contact-pref">
+              <legend>Как удобнее связаться</legend>
+              <label class="radio"><input type="radio" name="contactPref" value="write" checked> Написать сообщение</label>
+              <label class="radio"><input type="radio" name="contactPref" value="call"> Позвонить</label>
+            </fieldset>
+            <div id="writeOptions">
+              <label for="custMessenger">Куда написать</label>
+              <select id="custMessenger" name="messenger">
+                <option value="VK">VK</option>
+                <option value="Telegram">Telegram</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="SMS">SMS</option>
+              </select>
+            </div>
+            <div id="callOptions" hidden>
+              <label for="custCallTime">Удобное время для звонка</label>
+              <input id="custCallTime" name="callTime" type="text" maxlength="60" placeholder="Например: сегодня 18:00–20:00">
+            </div>
+
             <label class="consent" for="consent">
               <input type="checkbox" id="consent" name="consent" required>
               <span>Я принимаю <a href="terms.html" target="_blank" rel="noopener noreferrer">условия заказа</a> и <a href="privacy.html" target="_blank" rel="noopener noreferrer">политику конфиденциальности</a>, даю согласие на обработку персональных данных.</span>
@@ -208,7 +228,7 @@
         </ul>
       </div>
     </div>
-    <div class="container copy">© 2026 NOVA WEAR. <a href="terms.html">Условия заказа</a> · <a href="privacy.html">Политика конфиденциальности</a></div>
+    <div class="container copy">© 2026 NOVA WEAR. <a href="terms.html">Условия заказа</a> · <a href="privacy.html">Политика конфиденциальности</a> · <a href="admin.html" rel="nofollow">Для менеджера</a></div>
   </footer>
 
   <script src="script.js" defer></script>
