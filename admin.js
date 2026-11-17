@@ -2,8 +2,8 @@
 // NOTE: client-side password is NOT real security. Change ADMIN_PASSWORD and, for real protection, put the panel behind server-side auth.
 
 const ADMIN_PASSWORD = 'novawear'; // CHANGE THIS before publishing
-// Must match ORDER_API in script.js. Set to your Google Apps Script Web app URL to share orders across browsers.
-const ORDER_API = '';
+// Must match ORDER_API in script.js.
+const ORDER_API = 'https://script.google.com/macros/s/AKfycbytaHjnKE7rlpedfBmEVAiAWSbzbF7-EBlo7NfQU85YXOZHf2RDVgpfoDUsfUnReko/exec';
 
 const $ = (id) => document.getElementById(id);
 

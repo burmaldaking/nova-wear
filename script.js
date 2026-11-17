@@ -86,9 +86,8 @@
     let currentView = 0;
     let selectedSize = null;
     const VK_GROUP = 'https://vk.ru/nightsf';
-    // Backend endpoint for receiving orders (optional). Set to your Google Apps Script / form service URL.
-    // Leave empty to use local demo storage only.
-    const ORDER_API = '';
+    // Backend endpoint for receiving orders (Google Apps Script Web app).
+    const ORDER_API = 'https://script.google.com/macros/s/AKfycbytaHjnKE7rlpedfBmEVAiAWSbzbF7-EBlo7NfQU85YXOZHf2RDVgpfoDUsfUnReko/exec';
 
     function renderView() {
       if (!currentProduct) return;
