@@ -166,12 +166,8 @@
             </fieldset>
             <div id="writeOptions">
               <label for="custMessenger">Куда написать</label>
-              <select id="custMessenger" name="messenger">
-                <option value="VK">VK</option>
-                <option value="Telegram">Telegram</option>
-                <option value="WhatsApp">WhatsApp</option>
-                <option value="SMS">SMS</option>
-              </select>
+              <input id="custMessenger" name="messenger" type="text" maxlength="80" placeholder="Например: Telegram @username, WhatsApp, VK">
+              <p class="form-note">Можно написать куда угодно — укажите удобный мессенджер или контакт, как вам удобнее.</p>
             </div>
             <div id="callOptions" hidden>
               <label for="custCallTime">Удобное время для звонка</label>
@@ -184,12 +180,18 @@
             </label>
             <div class="form-actions">
               <button type="button" class="btn btn-ghost" id="orderCancel">Назад</button>
-              <button type="submit" class="btn btn-primary">Отправить в VK</button>
+              <button type="submit" class="btn btn-primary">Сделать заказ</button>
             </div>
             <p class="form-note">Сайт не хранит ваши данные. Сообщение отправляется вами в VK.</p>
           </div>
           <div class="order-success" id="orderSuccess" hidden>
-            <p><strong>Текст заказа скопирован.</strong> Вставьте его в чат VK и отправьте сообщение.</p>
+            <div class="success-head">
+              <span class="success-icon" aria-hidden="true">✓</span>
+              <div>
+                <h4>Заказ успешно создан</h4>
+                <p>Менеджер свяжется с вами в ближайшее свободное время.</p>
+              </div>
+            </div>
             <label for="orderText">Текст заказа</label>
             <textarea id="orderText" readonly></textarea>
             <div class="form-actions">

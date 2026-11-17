@@ -584,3 +584,93 @@
     .order-success textarea { min-height: 160px; }
     .order-success .btn { margin-top: 4px; }
     #orderDone { width: 100%; }
+
+    /* Contact preference */
+    fieldset.contact-pref {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 14px;
+    }
+    fieldset.contact-pref legend {
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding: 0 6px;
+    }
+    .radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 16px;
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .radio input { width: auto; }
+    #writeOptions, #callOptions { margin-top: 10px; }
+    #writeOptions[hidden], #callOptions[hidden] { display: none; }
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+    }
+
+    /* Minimalist checkbox-style radios for contact preference */
+    fieldset.contact-pref .radio input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      border: 1.5px solid var(--muted);
+      border-radius: 4px;
+      background: transparent;
+      position: relative;
+      cursor: pointer;
+      flex: 0 0 16px;
+    }
+    fieldset.contact-pref .radio input[type="radio"]:checked {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    fieldset.contact-pref .radio input[type="radio"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid #0b0b0f;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    fieldset.contact-pref .radio { align-items: center; }
+    /* Success panel */
+    .success-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 14px;
+      border: 1px solid rgba(200, 255, 77, 0.35);
+      background: rgba(200, 255, 77, 0.08);
+      border-radius: 12px;
+    }
+    .success-icon {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0b0b0f;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .success-head h4 { margin: 0 0 2px; font-size: 1.05rem; }
+    .success-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }

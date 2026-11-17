@@ -93,3 +93,7 @@
       .toolbar-actions { justify-content: stretch; }
       .toolbar-actions > * { flex: 1 1 auto; }
     }
+    .btn-write { margin-left: auto; }
+    .order-actions a, .order-actions button { cursor: pointer; position: relative; z-index: 2; }
+    .order-row a { color: var(--accent); text-decoration: none; }
+    .order-row a:hover { text-decoration: underline; }

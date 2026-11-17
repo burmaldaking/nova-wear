@@ -18,12 +18,19 @@ function digits(phone) { return (phone || '').replace(/\D/g, ''); }
 
 function messengerLink(order) {
   const ph = digits(order.phone);
-  switch (order.messenger) {
-    case 'Telegram': return `https://t.me/+${ph}`;
-    case 'WhatsApp': return `https://wa.me/${ph}`;
-    case 'SMS': return `sms:${order.phone}`;
-    default: return null; // VK has no direct phone link
+  const m = (order.messenger || '').toLowerCase();
+  if (m.includes('telegram')) {
+    const u = (order.messenger || '').match(/@([A-Za-z0-9_]+)/);
+    if (u) return `https://t.me/${u[1]}`;
+    return `https://t.me/+${ph}`;
   }
+  if (m.includes('whatsapp') || m.includes('whats app') || m.includes('ватсап') || m.includes('вотсап')) {
+    return `https://wa.me/${ph}`;
+  }
+  if (m.includes('sms') || m.includes('смс')) {
+    return `sms:${order.phone}`;
+  }
+  return null; // VK / other: copy phone
 }
 
 function formatDate(iso) {
@@ -67,8 +74,8 @@ function renderOrders() {
     card.className = `order-card ${order.status || 'new'}`;
     const writeLink = messengerLink(order);
     const writeBtn = writeLink
-      ? `<a class="btn btn-ghost" href="${writeLink}" target="_blank" rel="noopener noreferrer">Написать (${order.messenger || '—'})</a>`
-      : `<button type="button" class="btn btn-ghost" data-action="copy-phone" data-id="${order.id}">Скопировать телефон (VK)</button>`;
+      ? `<a class="btn btn-ghost" href="${writeLink}" target="_blank" rel="noopener noreferrer">Написать</a>`
+      : `<button type="button" class="btn btn-ghost" data-action="copy-phone" data-id="${order.id}">Скопировать телефон</button>`;
     card.innerHTML = `
       <div class="order-head">
         <h3>${escapeHtml(order.name || '—')}</h3>
@@ -76,7 +83,15 @@ function renderOrders() {
       </div>
       <div class="order-row"><strong>Товар:</strong> ${escapeHtml(order.product || '—')} · размер ${escapeHtml(order.size || '—')} · ${escapeHtml(order.price || '—')}</div>
       <div class="order-row"><strong>Телефон:</strong> <a href="tel:${escapeAttr(order.phone)}">${escapeHtml(order.phone || '—')}</a></div>
-      <div class="order-row"><strong>Связь:</strong> <span class="contact-badge">${order.contactPref === 'call' ? 'Позвонить' : 'Написать'}</span> ${order.contactPref === 'call' ? escapeHtml(order.callTime || '') : escapeHtml(order.messenger || '')}</div>
+      <div class="order-row"><strong>Связь:</strong> ${(() => {
+        const badge = `<span class="contact-badge">${order.contactPref === 'call' ? 'Позвонить' : 'Написать'}</span>`;
+        const detail = order.contactPref === 'call' ? escapeHtml(order.callTime || '') : escapeHtml(order.messenger || '');
+        const link = order.contactPref === 'call'
+          ? `tel:${escapeAttr(order.phone)}`
+          : (messengerLink(order) || null);
+        if (link) return `<a href="${link}" target="_blank" rel="noopener noreferrer">${badge}</a> ${detail}`;
+        return `${badge} ${detail}`;
+      })()}</div>
       ${order.comment ? `<div class="order-row"><strong>Комментарий:</strong> ${escapeHtml(order.comment)}</div>` : ''}
       <div class="order-row">
         <label for="st-${order.id}" class="muted">Статус:</label>
@@ -88,8 +103,8 @@ function renderOrders() {
       </div>
       <div class="order-actions">
         <a class="btn btn-primary" href="tel:${escapeAttr(order.phone)}">Позвонить</a>
-        ${writeBtn}
         <button type="button" class="btn btn-ghost" data-action="delete" data-id="${order.id}">Удалить</button>
+        ${writeBtn.replace('class="btn btn-ghost"', 'class="btn btn-ghost btn-write"')}
       </div>
     `;
     list.appendChild(card);
