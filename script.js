@@ -81,6 +81,8 @@
     const vkLink = document.getElementById('vkLink');
     const copyStatus = document.getElementById('copyStatus');
     let currentProduct = null;
+    let modalMouseDownTarget = null;
+    let orderMouseDownTarget = null;
     let currentView = 0;
     let selectedSize = null;
     const VK_GROUP = 'https://vk.ru/nightsf';
@@ -153,7 +155,8 @@
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card.dataset.id); } });
     });
     document.getElementById('modalClose').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    modal.addEventListener('mousedown', (e) => { modalMouseDownTarget = e.target; });
+    modal.addEventListener('click', (e) => { if (e.target === modal && modalMouseDownTarget === modal) closeModal(); });
     document.getElementById('prevView').addEventListener('click', () => { currentView = (currentView - 1 + views.length) % views.length; renderView(); });
     document.getElementById('nextView').addEventListener('click', () => { currentView = (currentView + 1) % views.length; renderView(); });
     document.addEventListener('keydown', (e) => {
@@ -203,7 +206,8 @@
     document.getElementById('orderClose').addEventListener('click', closeOrder);
     document.getElementById('orderCancel').addEventListener('click', closeOrder);
     document.getElementById('orderDone').addEventListener('click', closeOrder);
-    orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay) closeOrder(); });
+    orderOverlay.addEventListener('mousedown', (e) => { orderMouseDownTarget = e.target; });
+    orderOverlay.addEventListener('click', (e) => { if (e.target === orderOverlay && orderMouseDownTarget === orderOverlay) closeOrder(); });
     document.getElementById('copyOrder').addEventListener('click', () => {
       copyText(orderText.value);
       copyStatus.textContent = 'Текст скопирован.';
@@ -229,6 +233,5 @@
       vkLink.href = VK_GROUP;
       orderFields.hidden = true;
       orderSuccess.hidden = false;
-      copyStatus.textContent = 'Если чат не открылся, нажмите «Открыть VK».';
-      window.open(VK_GROUP, '_blank', 'noopener,noreferrer');
+      copyStatus.textContent = 'Текст скопирован. Проверьте сообщение и нажмите «Открыть VK», чтобы перейти в чат и отправить его.';
     });
