@@ -258,7 +258,8 @@
         localStorage.setItem('nova_orders', JSON.stringify(list));
       } catch (e) {}
       if (typeof ORDER_API !== 'undefined' && ORDER_API) {
-        fetch(ORDER_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderRecord), mode: 'cors' }).catch(() => {});
+        // no-cors + text/plain avoids a CORS preflight (Apps Script does not handle OPTIONS).
+        fetch(ORDER_API, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(orderRecord), mode: 'no-cors' }).catch(() => {});
       }
 
       copyText(msg);
